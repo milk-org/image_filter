@@ -79,7 +79,8 @@ void __attribute__ ((constructor)) libinit_image_filter()
 int init_image_filter()
 {
   strcpy(data.module[data.NBmodule].name, __FILE__);
-  strcpy(data.module[data.NBmodule].info, "milk    - Image filtering");
+  strcpy(data.module[data.NBmodule].package, "milk");
+  strcpy(data.module[data.NBmodule].info, "Image filtering");
   data.NBmodule++;
   
 
