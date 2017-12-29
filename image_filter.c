@@ -21,6 +21,7 @@
 
 extern DATA data;
 
+static int INITSTATUS_image_filter = 0;
 
 // CLI commands
 //
@@ -68,8 +69,12 @@ int_fast8_t fconvolve_cli()
 
 void __attribute__ ((constructor)) libinit_image_filter()
 {
-	init_image_filter();
-	RegisterModule(__FILE__, "milk", "Image filtering");
+	if ( INITSTATUS_image_filter == 0 )
+	{
+		init_image_filter();
+		RegisterModule(__FILE__, "milk", "Image filtering");
+		INITSTATUS_image_filter = 1;
+	}
 }
 
 

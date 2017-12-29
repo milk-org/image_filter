@@ -1,6 +1,7 @@
 #if !defined(FILTER_H)
 #define FILTER_H
 
+void __attribute__ ((constructor)) libinit_image_filter();
 int init_image_filter();
 
 int median_filter(const char *ID_name, const char *out_name, int filter_size);
