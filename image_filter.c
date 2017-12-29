@@ -69,7 +69,12 @@ int_fast8_t fconvolve_cli()
 void __attribute__ ((constructor)) libinit_image_filter()
 {
 	init_image_filter();
-//	printf(" ...... Loading module %s\n", __FILE__);
+
+	if(data.progStatus>0)
+	{
+		printf("  Found unloaded shared object in ./libs/ -> LOADING module %s\n", __FILE__);
+		fflush(stdout);
+	}	
 }
 
 
