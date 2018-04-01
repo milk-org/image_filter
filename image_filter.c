@@ -19,7 +19,7 @@
 #include "image_filter/image_filter.h"
 
 
-extern DATA data;
+//extern DATA data;
 
 static int INITSTATUS_image_filter = 0;
 
