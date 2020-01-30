@@ -2,11 +2,19 @@
 #define FILTER_H
 
 void __attribute__ ((constructor)) libinit_image_filter();
-int init_image_filter();
+
+errno_t init_image_filter();
+
 
 int median_filter(const char *ID_name, const char *out_name, int filter_size);
 
-long FILTER_percentile_interpol_fast(const char *ID_name, const char *IDout_name, double perc, long boxrad);
+
+imageID FILTER_percentile_interpol_fast(
+    const char *ID_name,
+    const char *IDout_name,
+    double      perc,
+    long        boxrad
+);
 
 long FILTER_percentile_interpol(const char *ID_name, const char *IDout_name, double perc, double sigma);
 
