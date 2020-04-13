@@ -1,9 +1,29 @@
-project(lib_image_filter_project)
+# library name
+set(LIBNAME "milkimagefilter")
+
+
+set(SOURCEFILES
+	image_filter.c)
+
+set(INCLUDEFILES
+	image_filter.h)
+
+
+# DEFAULT SETTINGS 
+# Do not change unless needed
+# =====================================================================
+
+project(lib_${LIBNAME}_project)
 
 include_directories ("${PROJECT_SOURCE_DIR}/src")
 include_directories ("${PROJECT_SOURCE_DIR}/..")
-add_library(image_filter SHARED image_filter.c)
 
-install(TARGETS image_filter DESTINATION lib)
-install(FILES image_filter.h DESTINATION include)
+
+# Library can be compiled from multiple source files
+# Convention: the main souce file is named <libname>.c
+# 
+add_library(${LIBNAME} SHARED ${SOURCEFILES})
+
+install(TARGETS ${LIBNAME} DESTINATION lib)
+install(FILES ${INCLUDEFILES} DESTINATION include)
 
