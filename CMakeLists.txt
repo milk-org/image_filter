@@ -1,12 +1,12 @@
 # library name
 set(LIBNAME "milkimagefilter")
-
+set(SRCNAME "image_filter")
 
 set(SOURCEFILES
-	image_filter.c)
+	${SRCNAME}.c)
 
 set(INCLUDEFILES
-	image_filter.h)
+	${SRCNAME}.h)
 
 
 # DEFAULT SETTINGS 
@@ -25,5 +25,5 @@ include_directories ("${PROJECT_SOURCE_DIR}/..")
 add_library(${LIBNAME} SHARED ${SOURCEFILES})
 
 install(TARGETS ${LIBNAME} DESTINATION lib)
-install(FILES ${INCLUDEFILES} DESTINATION include)
+install(FILES ${INCLUDEFILES} DESTINATION include/${SRCNAME})
 
