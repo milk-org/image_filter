@@ -19,8 +19,6 @@
 // Module short description
 #define MODULE_DESCRIPTION       "Image filtering"
 
-// Application to which module belongs
-#define MODULE_APPLICATION       "milk"
 
 
 
