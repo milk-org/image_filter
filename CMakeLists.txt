@@ -3,10 +3,28 @@ set(LIBNAME "milkimagefilter")
 set(SRCNAME "image_filter")
 
 set(SOURCEFILES
-	${SRCNAME}.c)
+	${SRCNAME}.c
+	cubepercentile.c
+	fconvolve.c
+	fit1D.c
+	fit2DcosKernel.c
+	fit2Dcossin.c
+	gaussfilter.c
+	medianfilter.c
+	percentile_interpolation.c
+)
 
 set(INCLUDEFILES
-	${SRCNAME}.h)
+	${SRCNAME}.h
+	cubepercentile.h
+	fconvolve.h
+	fit1D.h
+	fit2DcosKernel.h
+	fit2Dcossin.h
+	gaussfilter.h
+	medianfilter.h
+	percentile_interpolation.h
+)
 
 
 # DEFAULT SETTINGS 
