@@ -2,6 +2,9 @@
 set(LIBNAME "milkimagefilter")
 set(SRCNAME "image_filter")
 
+message("")
+message(" SRCNAME = ${SRCNAME} -> LIBNAME = ${LIBNAME}")
+
 set(SOURCEFILES
 	${SRCNAME}.c
 	cubepercentile.c
