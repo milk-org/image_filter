@@ -53,6 +53,10 @@ imageID FILTER_percentile_interpol_fast(
     IDpercmask = image_ID("_percmask");
 
     array = (double *) malloc(sizeof(double) * boxrad * boxrad * 4);
+    if(array == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
 
     for(ii1 = 0; ii1 < xsize1; ii1++)
         for(jj1 = 0; jj1 < ysize1; jj1++)
@@ -195,8 +199,18 @@ imageID FILTER_percentile_interpol(
 
     xsize = data.image[ID].md[0].size[0];
     ysize = data.image[ID].md[0].size[1];
+
     array = (double *) malloc(sizeof(double) * xsize * ysize);
+    if(array == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     varray = (double *) malloc(sizeof(double) * NBstep);
+    if(varray == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
 
 
     for(ii = 0; ii < xsize * ysize; ii++)

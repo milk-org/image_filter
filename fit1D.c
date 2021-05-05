@@ -32,10 +32,28 @@ int filter_fit1D(
     float cnt, coeff;
 
     xarray = (float *) malloc(sizeof(float) * NBpts);
+    if(xarray == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     yarray = (float *) malloc(sizeof(float) * NBpts);
+    if(yarray == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
 
     CX = (float *) malloc(sizeof(float) * PolyOrder);
+    if(CX == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     CXb = (float *) malloc(sizeof(float) * PolyOrder);
+    if(CXb == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
 
     fp = fopen(fname, "r");
     for(i = 0; i < NBpts; i++)

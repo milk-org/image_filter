@@ -22,7 +22,12 @@ imageID filter_CubePercentile(
     xsize = data.image[IDcin].md[0].size[0];
     ysize = data.image[IDcin].md[0].size[1];
     zsize = data.image[IDcin].md[0].size[2];
+
     array = (float *) malloc(sizeof(float) * xsize * ysize);
+    if(array == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
 
     IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
     for(ii = 0; ii < xsize * ysize; ii++)
@@ -62,7 +67,12 @@ imageID filter_CubePercentileLimit(
     xsize = data.image[IDcin].md[0].size[0];
     ysize = data.image[IDcin].md[0].size[1];
     zsize = data.image[IDcin].md[0].size[2];
+
     array = (float *) malloc(sizeof(float) * xsize * ysize);
+    if(array == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
 
     IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
     for(ii = 0; ii < xsize * ysize; ii++)

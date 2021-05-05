@@ -122,6 +122,10 @@ imageID gauss_filter(
     }
 
     array = (float *) malloc((2 * filtersizec + 1) * sizeof(float));
+    if(array == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
 
     if(naxis == 2)
     {
@@ -210,7 +214,7 @@ imageID gauss_filter(
                 for(j = 0; j < (2 * filtersizec + 1); j++)
                 {
                     data.image[IDout].array.F[k * naxes[0]*naxes[1] + (jj + filtersizec)*naxes[0] +
-                                               ii] += array[j] * data.image[IDtmp].array.F[(jj + j) * naxes[0] + ii];
+                                              ii] += array[j] * data.image[IDtmp].array.F[(jj + j) * naxes[0] + ii];
                 }
             }
 
@@ -282,6 +286,11 @@ imageID gauss_3Dfilter(
     float sum;
 
     array = (float *) malloc((2 * filter_size + 1) * sizeof(float));
+    if(array == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
@@ -315,8 +324,8 @@ imageID gauss_3Dfilter(
                 for(i = 0; i < (2 * filter_size + 1); i++)
                 {
                     data.image[IDtmp].array.F[kk * naxes[0]*naxes[1] + jj * naxes[0] +
-                                               (ii + filter_size)] += array[i] * data.image[ID].array.F[kk * naxes[0] *
-                                                       naxes[1] + jj * naxes[0] + (ii + i)];
+                                              (ii + filter_size)] += array[i] * data.image[ID].array.F[kk * naxes[0] *
+                                                      naxes[1] + jj * naxes[0] + (ii + i)];
                 }
             }
 
@@ -327,8 +336,8 @@ imageID gauss_3Dfilter(
                 for(j = 0; j < (2 * filter_size + 1); j++)
                 {
                     data.image[IDtmp1].array.F[kk * naxes[0]*naxes[1] + (jj + filter_size)*naxes[0]
-                                                + ii] += array[j] * data.image[IDtmp].array.F[kk * naxes[0] * naxes[1] +
-                                                         (jj + j) * naxes[0] + ii];
+                                               + ii] += array[j] * data.image[IDtmp].array.F[kk * naxes[0] * naxes[1] +
+                                                        (jj + j) * naxes[0] + ii];
                 }
             }
 
@@ -339,8 +348,8 @@ imageID gauss_3Dfilter(
                 for(k = 0; k < (2 * filter_size + 1); k++)
                 {
                     data.image[IDout].array.F[(kk + filter_size)*naxes[0]*naxes[1] + jj * naxes[0]
-                                               + ii] += array[k] * data.image[IDtmp1].array.F[(kk + k) * naxes[0] * naxes[1] +
-                                                        jj * naxes[0] + ii];
+                                              + ii] += array[k] * data.image[IDtmp1].array.F[(kk + k) * naxes[0] * naxes[1] +
+                                                       jj * naxes[0] + ii];
                 }
             }
 

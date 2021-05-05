@@ -45,8 +45,19 @@ int filter_fit2Dcossin(
     float *rarray;
 
     NBfrequ = NBfrequ1D * (2 * NBfrequ1D - 1);
+
     coscoeff = (float *) malloc(sizeof(float) * NBfrequ);
+    if(coscoeff == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     sincoeff = (float *) malloc(sizeof(float) * NBfrequ);
+    if(sincoeff == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     for(i = 0; i < NBfrequ1D; i++)
         for(j = 0; j < 2 * NBfrequ1D - 1; j++)
         {
@@ -85,8 +96,24 @@ int filter_fit2Dcossin(
     IDfit = create_2Dimage_ID("fitim", size, size);
 
     xarray = (float *) malloc(sizeof(float) * size * size);
+    if(xarray == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     yarray = (float *) malloc(sizeof(float) * size * size);
+    if(yarray == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     rarray = (float *) malloc(sizeof(float) * size * size);
+    if(rarray == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
+
 
     for(ii = 0; ii < size; ii += step)
         for(jj = 0; jj < size; jj += step)

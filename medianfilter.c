@@ -26,8 +26,15 @@ imageID median_filter(
         fflush(stdout);*/
     save_fl_fits(ID_name, "!mf_in.fits");
 
-    array = (float *) malloc((2 * filter_size + 1) * (2 * filter_size + 1) * sizeof(
-                                 float));
+    array =
+        (float *) malloc((2 * filter_size + 1) * (2 * filter_size + 1) * sizeof(float));
+    if(array == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
+
+
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
