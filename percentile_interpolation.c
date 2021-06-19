@@ -156,7 +156,7 @@ imageID FILTER_percentile_interpol_fast(
                     (1.0 - u) * t * v01 + u * (1.0 - t) * v10 + u * t * v11;
         }
 
-    delete_image_ID("_tmppercintf");
+    delete_image_ID("_tmppercintf", DELETE_IMAGE_ERRMODE_WARNING);
 
     return IDout;
 }
@@ -285,7 +285,7 @@ imageID FILTER_percentile_interpol(
         {
             data.image[IDc].array.F[k * xsize * ysize + ii] = data.image[ID2].array.F[ii];
         }
-        delete_image_ID("_testpercim2");
+        delete_image_ID("_testpercim2", DELETE_IMAGE_ERRMODE_WARNING);
     }
 
 
@@ -326,9 +326,9 @@ imageID FILTER_percentile_interpol(
     }
 
     //  save_fl_fits("_testpercim","!_testpercim.fits");
-    delete_image_ID("_kern");
-    delete_image_ID("_testpercim");
-    delete_image_ID("_testpercim1");
+    delete_image_ID("_kern", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("_testpercim", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("_testpercim1", DELETE_IMAGE_ERRMODE_WARNING);
     free(varray);
 
     return IDout;

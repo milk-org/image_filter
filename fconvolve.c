@@ -108,19 +108,19 @@ imageID fconvolve(
     do2drfft(name_ke, "kefft");
 
     arith_image_Cmult("infft", "kefft", "outfft");
-    delete_image_ID("infft");
-    delete_image_ID("kefft");
+    delete_image_ID("infft", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("kefft", DELETE_IMAGE_ERRMODE_WARNING);
     do2dffti("outfft", "outfft1");
-    delete_image_ID("outfft");
+    delete_image_ID("outfft", DELETE_IMAGE_ERRMODE_WARNING);
     mk_reim_from_complex("outfft1", "tmpre", "tmpim", 0);
 
     //  save_fl_fits("tmpre","!tmpre.fits");
     // save_fl_fits("tmpim","!tmpim.fits");
 
-    delete_image_ID("outfft1");
-    delete_image_ID("tmpim");
+    delete_image_ID("outfft1", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmpim", DELETE_IMAGE_ERRMODE_WARNING);
     arith_image_cstmult("tmpre", 1.0 / naxes[0] / naxes[1], name_out);
-    delete_image_ID("tmpre");
+    delete_image_ID("tmpre", DELETE_IMAGE_ERRMODE_WARNING);
     permut(name_out);
 
     IDout = image_ID(name_out);
@@ -190,9 +190,9 @@ imageID fconvolve_padd(
     //  printf(" done\n");
     // fflush(stdout);
 
-    delete_image_ID("tmpimpadd");
-    delete_image_ID("tmpkepadd");
-    delete_image_ID("tmpim1padd");
+    delete_image_ID("tmpimpadd", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmpkepadd", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmpim1padd", DELETE_IMAGE_ERRMODE_WARNING);
 
     ID1 = image_ID("tmpconv1");
     ID2 = image_ID("tmpconv2");
@@ -205,8 +205,8 @@ imageID fconvolve_padd(
                     paddsize) * naxespadd[0] + (ii + paddsize)] / data.image[ID2].array.F[(jj +
                             paddsize) * naxespadd[0] + (ii + paddsize)];
         }
-    delete_image_ID("tmpconv1");
-    delete_image_ID("tmpconv2");
+    delete_image_ID("tmpconv1", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmpconv2", DELETE_IMAGE_ERRMODE_WARNING);
 
     return IDout;
 }
@@ -232,14 +232,14 @@ imageID fconvolve_1(
     do2drfft(name_in, "infft");
 
     arith_image_Cmult("infft", kefft, "outfft");
-    delete_image_ID("infft");
+    delete_image_ID("infft", DELETE_IMAGE_ERRMODE_WARNING);
     do2dffti("outfft", "outfft1");
-    delete_image_ID("outfft");
+    delete_image_ID("outfft", DELETE_IMAGE_ERRMODE_WARNING);
     mk_reim_from_complex("outfft1", "tmpre", "tmpim", 0);
-    delete_image_ID("outfft1");
-    delete_image_ID("tmpim");
+    delete_image_ID("outfft1", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmpim", DELETE_IMAGE_ERRMODE_WARNING);
     arith_image_cstmult("tmpre", 1.0 / naxes[0] / naxes[1], name_out);
-    delete_image_ID("tmpre");
+    delete_image_ID("tmpre", DELETE_IMAGE_ERRMODE_WARNING);
     permut(name_out);
     imageID IDout = image_ID(name_out);
 
@@ -337,9 +337,9 @@ imageID fconvolveblock(
         data.image[IDout].array.F[ii] /= data.image[IDcnt].array.F[ii] + 1.0e-8;
     }
 
-    delete_image_ID("tmpcnt");
-    delete_image_ID("tmpblock");
-    delete_image_ID("tmpblockc");
+    delete_image_ID("tmpcnt", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmpblock", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("tmpblockc", DELETE_IMAGE_ERRMODE_WARNING);
 
     return IDout;
 }

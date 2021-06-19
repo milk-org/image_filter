@@ -257,7 +257,7 @@ imageID gauss_filter(
 
 
     //  save_fl_fits("gtmp","!gtmp");
-    delete_image_ID("gtmp");
+    delete_image_ID("gtmp", DELETE_IMAGE_ERRMODE_WARNING);
 
     free(array);
 
@@ -354,8 +354,8 @@ imageID gauss_3Dfilter(
             }
 
 
-    delete_image_ID("gtmp");
-    delete_image_ID("gtmp1");
+    delete_image_ID("gtmp", DELETE_IMAGE_ERRMODE_WARNING);
+    delete_image_ID("gtmp1", DELETE_IMAGE_ERRMODE_WARNING);
 
     free(array);
 
