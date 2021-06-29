@@ -29,7 +29,7 @@ imageID filter_CubePercentile(
         abort();
     }
 
-    IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
+    create_2Dimage_ID(IDout_name, xsize, ysize, &IDout);
     for(ii = 0; ii < xsize * ysize; ii++)
     {
         for(kk = 0; kk < zsize; kk++)
@@ -74,7 +74,7 @@ imageID filter_CubePercentileLimit(
         abort();
     }
 
-    IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
+    create_2Dimage_ID(IDout_name, xsize, ysize, &IDout);
     for(ii = 0; ii < xsize * ysize; ii++)
     {
         cnt = 0;

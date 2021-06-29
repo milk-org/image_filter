@@ -47,7 +47,7 @@ imageID FILTER_percentile_interpol_fast(
     xsize1 = (long)(xsize / step);
     ysize1 = (long)(ysize / step);
 
-    ID1 = create_2Dimage_ID("_tmppercintf", xsize1, ysize1);
+    create_2Dimage_ID("_tmppercintf", xsize1, ysize1, &ID1);
 
     // identify mask if it exists
     IDpercmask = image_ID("_percmask");
@@ -119,7 +119,7 @@ imageID FILTER_percentile_interpol_fast(
         }
     free(array);
 
-    IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
+    create_2Dimage_ID(IDout_name, xsize, ysize, &IDout);
 
     for(ii = 0; ii < xsize; ii++)
         for(jj = 0; jj < ysize; jj++)
@@ -247,7 +247,7 @@ imageID FILTER_percentile_interpol(
     printf("Testing %ld values in range %g -> %g\n", NBstep, Imin, Imax);
     fflush(stdout);
 
-    IDc = create_3Dimage_ID("_testpercim", xsize, ysize, NBstep);
+    create_3Dimage_ID("_testpercim", xsize, ysize, NBstep, &IDc);
 
     IDkern = make_gauss("_kern", xsize, ysize, sigma, 1.0);
     tot = 0.0;
@@ -261,7 +261,7 @@ imageID FILTER_percentile_interpol(
     }
 
 
-    IDtmp = create_2Dimage_ID("_testpercim1", xsize, ysize);
+    create_2Dimage_ID("_testpercim1", xsize, ysize, &IDtmp);
     for(k = 0; k < NBstep; k++)
     {
         printf("   %ld/%ld threshold = %f\n", k, NBstep, varray[k]);
@@ -289,7 +289,7 @@ imageID FILTER_percentile_interpol(
     }
 
 
-    IDout = create_2Dimage_ID(IDout_name, xsize, ysize);
+    create_2Dimage_ID(IDout_name, xsize, ysize, &IDout);
     for(ii = 0; ii < xsize * ysize; ii++)
     {
         k = 0;

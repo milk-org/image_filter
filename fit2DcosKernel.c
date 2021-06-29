@@ -12,11 +12,13 @@
 
 
 
-int filter_fit2DcosKernel(
+errno_t filter_fit2DcosKernel(
     const char *__restrict__ IDname,
     float       radius
 )
 {
+    DEBUG_TRACE_FSTART();
+
     imageID ID, ID1, ID2, ID3;
     long size;
     long NBgridpts1D = 20;
@@ -79,9 +81,9 @@ int filter_fit2DcosKernel(
     size = data.image[ID].md[0].size[0];
 
 
-    ID1 = create_2Dimage_ID("testim", size, size);
-    ID2 = create_2Dimage_ID("fitim", size, size);
-    ID3 = create_2Dimage_ID("residual", size, size);
+    FUNC_CHECK_RETURN( create_2Dimage_ID("testim", size, size, &ID1) );
+    FUNC_CHECK_RETURN( create_2Dimage_ID("fitim", size, size, &ID2) );
+    FUNC_CHECK_RETURN( create_2Dimage_ID("residual", size, size, &ID3) );
 
     for(ii = 0; ii < size; ii++)
         for(jj = 0; jj < size; jj++)
@@ -234,6 +236,8 @@ int filter_fit2DcosKernel(
     free(y0array);
     free(Varray);
     free(Varraycnt);
+
+    DEBUG_TRACE_FEXIT();
 
     return(0);
 }

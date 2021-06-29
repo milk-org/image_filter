@@ -92,8 +92,8 @@ int filter_fit2Dcossin(
     ID = image_ID(IDname);
     size = data.image[ID].md[0].size[0];
     printf("SIZE = %ld\n", size);
-    IDres = create_2Dimage_ID("residual", size, size);
-    IDfit = create_2Dimage_ID("fitim", size, size);
+    create_2Dimage_ID("residual", size, size, &IDres);
+    create_2Dimage_ID("fitim", size, size, &IDfit);
 
     xarray = (float *) malloc(sizeof(float) * size * size);
     if(xarray == NULL) {

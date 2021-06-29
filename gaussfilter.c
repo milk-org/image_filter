@@ -133,7 +133,7 @@ imageID gauss_filter(
     }
     copy_image_ID(ID_name, out_name, 0);
     arith_image_zero(out_name);
-    IDtmp = create_2Dimage_ID("gtmp", naxes[0], naxes[1]);
+    create_2Dimage_ID("gtmp", naxes[0], naxes[1], &IDtmp);
     //  copy_image_ID(ID_name,"gtmp", 0);
     // arith_image_zero("gtmp");
     // save_fl_fits("gtmp","!gtmp0");

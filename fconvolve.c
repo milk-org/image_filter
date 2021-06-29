@@ -1,5 +1,5 @@
 /** @file fconvolve.c
- * 
+ *
  */
 
 #include <math.h>
@@ -166,9 +166,9 @@ imageID fconvolve_padd(
 
     // printf("new axes : %ld %ld\n",naxespadd[0],naxespadd[1]);
 
-    ID1 = create_2Dimage_ID("tmpimpadd", naxespadd[0], naxespadd[1]);
-    ID2 = create_2Dimage_ID("tmpkepadd", naxespadd[0], naxespadd[1]);
-    ID3 = create_2Dimage_ID("tmpim1padd", naxespadd[0], naxespadd[1]);
+    create_2Dimage_ID("tmpimpadd", naxespadd[0], naxespadd[1], &ID1);
+    create_2Dimage_ID("tmpkepadd", naxespadd[0], naxespadd[1], &ID2);
+    create_2Dimage_ID("tmpim1padd", naxespadd[0], naxespadd[1], &ID3);
 
     for(ii = 0; ii < naxes[0]; ii++)
         for(jj = 0; jj < naxes[1]; jj++)
@@ -196,7 +196,7 @@ imageID fconvolve_padd(
 
     ID1 = image_ID("tmpconv1");
     ID2 = image_ID("tmpconv2");
-    IDout = create_2Dimage_ID(name_out, naxes[0], naxes[1]);
+    create_2Dimage_ID(name_out, naxes[0], naxes[1], &IDout);
 
     for(ii = 0; ii < naxes[0]; ii++)
         for(jj = 0; jj < naxes[1]; jj++)
@@ -273,11 +273,13 @@ imageID fconvolveblock(
     IDin = image_ID(name_in);
     xsize = data.image[IDin].md[0].size[0];
     ysize = data.image[IDin].md[0].size[1];
-    IDout = create_2Dimage_ID(name_out, xsize, ysize);
 
-    IDtmp = create_2Dimage_ID("tmpblock", blocksize, blocksize);
+    create_2Dimage_ID(name_out, xsize, ysize, &IDout);
 
-    IDcnt = create_2Dimage_ID("tmpcnt", xsize, ysize);
+    create_2Dimage_ID("tmpblock", blocksize, blocksize, &IDtmp);
+
+    create_2Dimage_ID("tmpcnt", xsize, ysize, &IDcnt);
+
     for(ii = 0; ii < xsize * ysize; ii++)
     {
         data.image[IDcnt].array.F[ii] = 0.0;
