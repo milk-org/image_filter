@@ -16,9 +16,9 @@
 
 
 imageID fconvolve(
-    const char *__restrict__ name_in,
-    const char *__restrict__ name_ke,
-    const char *__restrict__ name_out
+    const char *__restrict name_in,
+    const char *__restrict name_ke,
+    const char *__restrict name_out
 );
 
 
@@ -80,9 +80,9 @@ errno_t fconvolve_addCLIcmd()
 
 
 imageID fconvolve(
-    const char *__restrict__ name_in,
-    const char *__restrict__ name_ke,
-    const char *__restrict__ name_out
+    const char *__restrict name_in,
+    const char *__restrict name_ke,
+    const char *__restrict name_out
 )
 {
     imageID IDin;
@@ -133,10 +133,10 @@ imageID fconvolve(
 
 // to avoid edge effects
 imageID fconvolve_padd(
-    const char *__restrict__ name_in,
-    const char *__restrict__ name_ke,
+    const char *__restrict name_in,
+    const char *__restrict name_ke,
     long paddsize,
-    const char *__restrict__ name_out
+    const char *__restrict name_out
 )
 {
     imageID IDin;
@@ -216,9 +216,9 @@ imageID fconvolve_padd(
 
 
 imageID fconvolve_1(
-    const char *__restrict__ name_in,
-    const char *__restrict__ kefft,
-    const char *__restrict__ name_out
+    const char *__restrict name_in,
+    const char *__restrict kefft,
+    const char *__restrict name_out
 )
 {
     /* FFT of kernel has already been done */
@@ -252,9 +252,9 @@ imageID fconvolve_1(
 // if blocksize = 512, for images > 512x512, break image in 512x512 overlapping blocks
 // kernel image must be blocksize
 imageID fconvolveblock(
-    const char *__restrict__ name_in,
-    const char *__restrict__ name_ke,
-    const char *__restrict__ name_out,
+    const char *__restrict name_in,
+    const char *__restrict name_ke,
+    const char *__restrict name_out,
     long blocksize
 )
 {

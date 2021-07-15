@@ -11,7 +11,7 @@
 
 // fits a 2D image as a sum of cosines and sines
 int filter_fit2Dcossin(
-    const char *__restrict__ IDname,
+    const char *__restrict IDname,
     float radius
 )
 {

@@ -172,8 +172,8 @@ imageID FILTER_percentile_interpol_fast(
 // works well for smooth images, with perc between 0.1 and 0.9
 //
 imageID FILTER_percentile_interpol(
-    const char *__restrict__ ID_name,
-    const char *__restrict__ IDout_name,
+    const char *__restrict ID_name,
+    const char *__restrict IDout_name,
     double perc,
     double sigma
 )

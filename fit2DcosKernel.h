@@ -3,7 +3,7 @@
 
 
 errno_t filter_fit2DcosKernel(
-    const char *__restrict__ IDname,
+    const char *__restrict IDname,
     float       radius
 );
 

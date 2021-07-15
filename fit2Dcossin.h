@@ -2,6 +2,6 @@
  */
 
 int filter_fit2Dcossin(
-    const char *__restrict__ IDname,
+    const char *__restrict IDname,
     float radius
 );

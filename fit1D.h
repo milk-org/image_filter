@@ -2,7 +2,7 @@
  */
 
 int filter_fit1D(
-    const char *__restrict__ fname,
+    const char *__restrict fname,
     long NBpts
 );
 
