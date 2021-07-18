@@ -325,7 +325,7 @@ imageID FILTER_percentile_interpol(
 
     }
 
-    //  save_fl_fits("_testpercim","!_testpercim.fits");
+    //  save_fl_fits("_testpercim","_testpercim.fits");
     delete_image_ID("_kern", DELETE_IMAGE_ERRMODE_WARNING);
     delete_image_ID("_testpercim", DELETE_IMAGE_ERRMODE_WARNING);
     delete_image_ID("_testpercim1", DELETE_IMAGE_ERRMODE_WARNING);

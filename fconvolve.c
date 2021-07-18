@@ -101,8 +101,8 @@ imageID fconvolve(
                 "ERROR in function fconvolve: image and kernel have different sizes\n");
         exit(0);
     }
-    //  save_fl_fits(name_in,"!test1.fits");
-    // save_fl_fits(name_ke,"!test2.fits");
+    //  save_fl_fits(name_in,"test1.fits");
+    // save_fl_fits(name_ke,"test2.fits");
 
     do2drfft(name_in, "infft");
     do2drfft(name_ke, "kefft");
@@ -114,8 +114,8 @@ imageID fconvolve(
     delete_image_ID("outfft", DELETE_IMAGE_ERRMODE_WARNING);
     mk_reim_from_complex("outfft1", "tmpre", "tmpim", 0);
 
-    //  save_fl_fits("tmpre","!tmpre.fits");
-    // save_fl_fits("tmpim","!tmpim.fits");
+    //  save_fl_fits("tmpre","tmpre.fits");
+    // save_fl_fits("tmpim","tmpim.fits");
 
     delete_image_ID("outfft1", DELETE_IMAGE_ERRMODE_WARNING);
     delete_image_ID("tmpim", DELETE_IMAGE_ERRMODE_WARNING);
@@ -332,7 +332,7 @@ imageID fconvolveblock(
                     }
                 }
         }
-    //  save_fl_fits("tmpcnt","!tmpcnt.fits");
+    //  save_fl_fits("tmpcnt","tmpcnt.fits");
     // exit(0);
     for(ii = 0; ii < xsize * ysize; ii++)
     {

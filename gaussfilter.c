@@ -136,7 +136,7 @@ imageID gauss_filter(
     create_2Dimage_ID("gtmp", naxes[0], naxes[1], &IDtmp);
     //  copy_image_ID(ID_name,"gtmp", 0);
     // arith_image_zero("gtmp");
-    // save_fl_fits("gtmp","!gtmp0");
+    // save_fl_fits("gtmp","gtmp0");
     // IDtmp = image_ID("gtmp");
     IDout = image_ID(out_name);
 
@@ -256,7 +256,7 @@ imageID gauss_filter(
     }
 
 
-    //  save_fl_fits("gtmp","!gtmp");
+    //  save_fl_fits("gtmp","gtmp");
     delete_image_ID("gtmp", DELETE_IMAGE_ERRMODE_WARNING);
 
     free(array);

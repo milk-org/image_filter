@@ -125,8 +125,8 @@ errno_t filter_fit2DcosKernel(
                     - data.image[ID2].array.F[jj * size + ii];
         }
 
-    save_fl_fits("fitim", "!fitim");
-    save_fl_fits("residual", "!residual0");
+    save_fl_fits("fitim", "fitim");
+    save_fl_fits("residual", "residual0");
     //   exit(0);
 
     for(iter = 0; iter < NBiter; iter++)
@@ -228,8 +228,8 @@ errno_t filter_fit2DcosKernel(
         printf("Iteration %ld / %ld    error = %g RMS\n", iter, NBiter,
                sqrt(error / cnt));
 
-        save_fl_fits("residual", "!residual");
-        save_fl_fits("fitim", "!fitim");
+        save_fl_fits("residual", "residual");
+        save_fl_fits("fitim", "fitim");
     }
 
     free(x0array);

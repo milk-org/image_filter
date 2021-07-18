@@ -252,8 +252,8 @@ int filter_fit2Dcossin(
 
             }
         printf("iter %ld / %ld   error = %g\n", iter, NBiter, sqrt(error / errorcnt));
-        save_fl_fits("fitim", "!fitim");
-        save_fl_fits("residual", "!residual");
+        save_fl_fits("fitim", "fitim");
+        save_fl_fits("residual", "residual");
 
         fp = fopen("fitcoeff.dat", "w");
         for(i = 0; i < NBfrequ1D; i++)
