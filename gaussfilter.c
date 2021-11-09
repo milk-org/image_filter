@@ -8,6 +8,21 @@
 #include "COREMOD_arith/COREMOD_arith.h"
 
 
+typedef struct
+{
+    char *name;
+    uint32_t *xsize;
+    uint32_t *ysize;
+    int *shared;
+    int *NBkw;
+    int *CBsize;
+} LOCVAR_INIMG2D;
+
+// Local variables pointers
+//static LOCVAR_INIMG2D inim;
+//static LOCVAR_OUTIMG2D outim;
+//static float *sigmaval;
+//static int *filtsizeval;
 
 // ==========================================
 // Forward declaration(s)
