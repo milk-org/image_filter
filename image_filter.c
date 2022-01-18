@@ -4,7 +4,6 @@
  *
  */
 
-
 /* ================================================================== */
 /* ================================================================== */
 /*            MODULE INFO                                             */
@@ -17,18 +16,12 @@
 #define MODULE_SHORTNAME_DEFAULT "imgfilt"
 
 // Module short description
-#define MODULE_DESCRIPTION       "Image filtering"
-
-
-
-
+#define MODULE_DESCRIPTION "Image filtering"
 
 #include "CommandLineInterface/CLIcore.h"
 
 #include "fconvolve.h"
 #include "gaussfilter.h"
-
-
 
 /* ================================================================== */
 /* ================================================================== */
@@ -41,41 +34,28 @@
 //
 INIT_MODULE_LIB(image_filter)
 
-
 /* ================================================================== */
 /* ================================================================== */
 /*            COMMAND LINE INTERFACE (CLI) FUNCTIONS                  */
 /* ================================================================== */
 /* ================================================================== */
 
-
 //long fconvolve(const char *ID_in, const char *ID_ke, const char *ID_out);
-
-
-
-
-
-
 
 static errno_t init_module_CLI()
 {
-	gaussfilter_addCLIcmd();
-	fconvolve_addCLIcmd();
+    gaussfilter_addCLIcmd();
+    fconvolve_addCLIcmd();
 
     // add atexit functions here
 
     return RETURN_SUCCESS;
-
 }
-
-
-
-
 
 //int f_filter(const char *ID_name, const char *ID_out, float f1, float f2)
 //{
 //    printf("%s %s %f %f\n", ID_name, ID_out, f1, f2);
-    /*  char lstring[1000];
+/*  char lstring[1000];
     int ID;
     long naxes[2];
     float a=200.0;
@@ -116,7 +96,6 @@ static errno_t init_module_CLI()
 //   return(0);
 //}
 
-
 /*
 int film_scanner_vsripes_remove(const char *IDname, const char *IDout, long l1,
                                 long l2)
@@ -132,7 +111,7 @@ int film_scanner_vsripes_remove(const char *IDname, const char *IDout, long l1,
     naxes[1] = data.image[ID].md[0].size[1];
     printf("%s\n", IDout);
 
-    // fill up linarray 
+    // fill up linarray
     smarray = (float *) malloc(sizeof(float) * (l2 - l1));
 
     for(ii = 0; ii < naxes[0]; ii++)
@@ -154,7 +133,3 @@ int film_scanner_vsripes_remove(const char *IDname, const char *IDout, long l1,
     return(0);
 }
 */
-
-
-
-
