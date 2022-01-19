@@ -3,9 +3,10 @@
 
 #include <math.h>
 
+#include "CommandLineInterface/CLIcore.h"
+
 #include "COREMOD_iofits/COREMOD_iofits.h"
 #include "COREMOD_memory/COREMOD_memory.h"
-#include "CommandLineInterface/CLIcore.h"
 
 // fits a 2D image as a sum of cosines and sines
 int filter_fit2Dcossin(const char *__restrict IDname, float radius)

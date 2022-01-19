@@ -1,9 +1,10 @@
 /** @file percentile_interpolation.c
  */
 
+#include "CommandLineInterface/CLIcore.h"
+
 #include "COREMOD_memory/COREMOD_memory.h"
 #include "COREMOD_tools/COREMOD_tools.h"
-#include "CommandLineInterface/CLIcore.h"
 
 #include "image_gen/image_gen.h"
 

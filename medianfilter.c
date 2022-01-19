@@ -1,10 +1,11 @@
 /** @file medianfilter.c
  */
 
+#include "CommandLineInterface/CLIcore.h"
+
 #include "COREMOD_iofits/COREMOD_iofits.h"
 #include "COREMOD_memory/COREMOD_memory.h"
 #include "COREMOD_tools/COREMOD_tools.h"
-#include "CommandLineInterface/CLIcore.h"
 
 imageID median_filter(const char *__restrict ID_name, const char *__restrict out_name, int filter_size)
 {
