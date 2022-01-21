@@ -10,39 +10,42 @@
 
 #include "fconvolve.h"
 
-imageID FILTER_percentile_interpol_fast(const char *ID_name, const char *IDout_name, double perc, long boxrad)
+imageID FILTER_percentile_interpol_fast(const char *ID_name,
+                                        const char *IDout_name,
+                                        double      perc,
+                                        long        boxrad)
 {
     imageID ID, ID1, IDout;
-    long step;
-    long ii, jj, ii1, jj1, ii2, jj2;
-    long iis, iie, jjs, jje;
-    long xsize, ysize, xsize1, ysize1;
+    long    step;
+    long    ii, jj, ii1, jj1, ii2, jj2;
+    long    iis, iie, jjs, jje;
+    long    xsize, ysize, xsize1, ysize1;
     double *array;
-    double v00, v01, v10, v11;
-    double u, t, ii1f, jj1f, x, y;
-    long cnt;
-    long pixstep = 5;
-    long IDpercmask; // optional mask file
+    double  v00, v01, v10, v11;
+    double  u, t, ii1f, jj1f, x, y;
+    long    cnt;
+    long    pixstep = 5;
+    long    IDpercmask; // optional mask file
 
-    step = (long)(0.7 * boxrad);
+    step = (long) (0.7 * boxrad);
     if (step < 1)
     {
         step = 1;
     }
 
-    ID = image_ID(ID_name);
+    ID    = image_ID(ID_name);
     xsize = data.image[ID].md[0].size[0];
     ysize = data.image[ID].md[0].size[1];
 
-    xsize1 = (long)(xsize / step);
-    ysize1 = (long)(ysize / step);
+    xsize1 = (long) (xsize / step);
+    ysize1 = (long) (ysize / step);
 
     create_2Dimage_ID("_tmppercintf", xsize1, ysize1, &ID1);
 
     // identify mask if it exists
     IDpercmask = image_ID("_percmask");
 
-    array = (double *)malloc(sizeof(double) * boxrad * boxrad * 4);
+    array = (double *) malloc(sizeof(double) * boxrad * boxrad * 4);
     if (array == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
@@ -55,25 +58,25 @@ imageID FILTER_percentile_interpol_fast(const char *ID_name, const char *IDout_n
             x = 1.0 * (ii1 + 0.5) / xsize1 * xsize;
             y = 1.0 * (jj1 + 0.5) / ysize1 * ysize;
 
-            iis = (long)(x - boxrad);
+            iis = (long) (x - boxrad);
             if (iis < 0)
             {
                 iis = 0;
             }
 
-            iie = (long)(x + boxrad);
+            iie = (long) (x + boxrad);
             if (iie > xsize)
             {
                 iie = xsize;
             }
 
-            jjs = (long)(y - boxrad);
+            jjs = (long) (y - boxrad);
             if (jjs < 0)
             {
                 jjs = 0;
             }
 
-            jje = (long)(y + boxrad);
+            jje = (long) (y + boxrad);
             if (jje > ysize)
             {
                 jje = ysize;
@@ -94,16 +97,19 @@ imageID FILTER_percentile_interpol_fast(const char *ID_name, const char *IDout_n
                 for (ii = iis; ii < iie; ii += pixstep)
                     for (jj = jjs; jj < jje; jj += pixstep)
                     {
-                        if (data.image[IDpercmask].array.F[jj * xsize + ii] > 0.5)
+                        if (data.image[IDpercmask].array.F[jj * xsize + ii] >
+                            0.5)
                         {
-                            array[cnt] = data.image[ID].array.F[jj * xsize + ii];
+                            array[cnt] =
+                                data.image[ID].array.F[jj * xsize + ii];
                             cnt++;
                         }
                     }
             }
             quick_sort_double(array, cnt);
 
-            data.image[ID1].array.F[jj1 * xsize1 + ii1] = array[(long)(perc * cnt)];
+            data.image[ID1].array.F[jj1 * xsize1 + ii1] =
+                array[(long) (perc * cnt)];
             //	data.image[IDx].array.F[jj1*xsize1+ii1] = 0.5*(iis+iie);
             //data.image[IDy].array.F[jj1*xsize1+ii1] = 0.5*(jjs+jje);
         }
@@ -116,8 +122,8 @@ imageID FILTER_percentile_interpol_fast(const char *ID_name, const char *IDout_n
         {
             ii1f = 1.0 * ii / xsize * xsize1;
             jj1f = 1.0 * jj / ysize * ysize1;
-            ii1 = (long)(ii1f);
-            jj1 = (long)(jj1f);
+            ii1  = (long) (ii1f);
+            jj1  = (long) (jj1f);
 
             ii2 = ii1 + 1;
             jj2 = jj1 + 1;
@@ -143,7 +149,8 @@ imageID FILTER_percentile_interpol_fast(const char *ID_name, const char *IDout_n
             v11 = data.image[ID1].array.F[jj2 * xsize1 + ii2];
 
             data.image[IDout].array.F[jj * xsize + ii] =
-                (1.0 - u) * (1.0 - t) * v00 + (1.0 - u) * t * v01 + u * (1.0 - t) * v10 + u * t * v11;
+                (1.0 - u) * (1.0 - t) * v00 + (1.0 - u) * t * v01 +
+                u * (1.0 - t) * v10 + u * t * v11;
         }
 
     delete_image_ID("_tmppercintf", DELETE_IMAGE_ERRMODE_WARNING);
@@ -159,39 +166,41 @@ imageID FILTER_percentile_interpol_fast(const char *ID_name, const char *IDout_n
 // this algorithm tests values and build the final map from these tests
 // works well for smooth images, with perc between 0.1 and 0.9
 //
-imageID FILTER_percentile_interpol(const char *__restrict ID_name, const char *__restrict IDout_name, double perc,
+imageID FILTER_percentile_interpol(const char *__restrict ID_name,
+                                   const char *__restrict IDout_name,
+                                   double perc,
                                    double sigma)
 {
-    imageID ID, IDout, IDtmp, ID2;
-    long NBstep = 10;
-    double Imin, Imax;
-    long xsize, ysize;
-    double *array;
-    long IDc;
-    long k;
-    double *varray;
-    long ii;
-    double value;
-    double range;
-    long IDkern;
+    imageID     ID, IDout, IDtmp, ID2;
+    long        NBstep = 10;
+    double      Imin, Imax;
+    long        xsize, ysize;
+    double     *array;
+    long        IDc;
+    long        k;
+    double     *varray;
+    long        ii;
+    double      value;
+    double      range;
+    long        IDkern;
     long double tot;
-    long k1, k2;
-    double x, v1, v2;
-    double pstart, pend;
+    long        k1, k2;
+    double      x, v1, v2;
+    double      pstart, pend;
 
     ID = image_ID(ID_name);
 
     xsize = data.image[ID].md[0].size[0];
     ysize = data.image[ID].md[0].size[1];
 
-    array = (double *)malloc(sizeof(double) * xsize * ysize);
+    array = (double *) malloc(sizeof(double) * xsize * ysize);
     if (array == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
         abort();
     }
 
-    varray = (double *)malloc(sizeof(double) * NBstep);
+    varray = (double *) malloc(sizeof(double) * NBstep);
     if (varray == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
@@ -205,7 +214,7 @@ imageID FILTER_percentile_interpol(const char *__restrict ID_name, const char *_
     quick_sort_double(array, xsize * ysize);
 
     pstart = 0.8 * perc - 0.05;
-    pend = 1.2 * perc + 0.05;
+    pend   = 1.2 * perc + 0.05;
     if (pstart < 0.01)
     {
         pstart = 0.01;
@@ -215,8 +224,8 @@ imageID FILTER_percentile_interpol(const char *__restrict ID_name, const char *_
         pend = 0.99;
     }
 
-    Imin = array[(long)(pstart * xsize * ysize)];
-    Imax = array[(long)(pend * xsize * ysize)];
+    Imin = array[(long) (pstart * xsize * ysize)];
+    Imax = array[(long) (pend * xsize * ysize)];
 
     range = Imax - Imin;
     Imin -= 0.1 * range;
@@ -235,7 +244,7 @@ imageID FILTER_percentile_interpol(const char *__restrict ID_name, const char *_
     create_3Dimage_ID("_testpercim", xsize, ysize, NBstep, &IDc);
 
     IDkern = make_gauss("_kern", xsize, ysize, sigma, 1.0);
-    tot = 0.0;
+    tot    = 0.0;
     for (ii = 0; ii < xsize * ysize; ii++)
     {
         tot += data.image[IDkern].array.F[ii];
@@ -262,12 +271,16 @@ imageID FILTER_percentile_interpol(const char *__restrict ID_name, const char *_
             }
         }
 
-        fconvolve_padd("_testpercim1", "_kern", (long)(3.0 * sigma), "_testpercim2");
+        fconvolve_padd("_testpercim1",
+                       "_kern",
+                       (long) (3.0 * sigma),
+                       "_testpercim2");
 
         ID2 = image_ID("_testpercim2");
         for (ii = 0; ii < xsize * ysize; ii++)
         {
-            data.image[IDc].array.F[k * xsize * ysize + ii] = data.image[ID2].array.F[ii];
+            data.image[IDc].array.F[k * xsize * ysize + ii] =
+                data.image[ID2].array.F[ii];
         }
         delete_image_ID("_testpercim2", DELETE_IMAGE_ERRMODE_WARNING);
     }
@@ -275,7 +288,7 @@ imageID FILTER_percentile_interpol(const char *__restrict ID_name, const char *_
     create_2Dimage_ID(IDout_name, xsize, ysize, &IDout);
     for (ii = 0; ii < xsize * ysize; ii++)
     {
-        k = 0;
+        k  = 0;
         k1 = 0;
         k2 = 0;
         v1 = 0.0;
@@ -292,7 +305,8 @@ imageID FILTER_percentile_interpol(const char *__restrict ID_name, const char *_
         if ((v1 < perc) && (perc < v2))
         {
             x = (perc - v1) / (v2 - v1);
-            data.image[IDout].array.F[ii] = (1.0 - x) * varray[k1] + x * varray[k2];
+            data.image[IDout].array.F[ii] =
+                (1.0 - x) * varray[k1] + x * varray[k2];
         }
         else
         {

@@ -10,12 +10,12 @@
 
 typedef struct
 {
-    char *name;
+    char     *name;
     uint32_t *xsize;
     uint32_t *ysize;
-    int *shared;
-    int *NBkw;
-    int *CBsize;
+    int      *shared;
+    int      *NBkw;
+    int      *CBsize;
 } LOCVAR_INIMG2D;
 
 // Local variables pointers
@@ -28,7 +28,10 @@ typedef struct
 // Forward declaration(s)
 // ==========================================
 
-imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_name, float sigma, int filter_size);
+imageID gauss_filter(const char *__restrict ID_name,
+                     const char *__restrict out_name,
+                     float sigma,
+                     int   filter_size);
 
 // ==========================================
 // Command line interface wrapper function(s)
@@ -36,9 +39,13 @@ imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_
 
 static errno_t gauss_filter_cli()
 {
-    if (CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3, 1) + CLI_checkarg(4, 2) == 0)
+    if (CLI_checkarg(1, 4) + CLI_checkarg(2, 3) + CLI_checkarg(3, 1) +
+            CLI_checkarg(4, 2) ==
+        0)
     {
-        gauss_filter(data.cmdargtoken[1].val.string, data.cmdargtoken[2].val.string, data.cmdargtoken[3].val.numf,
+        gauss_filter(data.cmdargtoken[1].val.string,
+                     data.cmdargtoken[2].val.string,
+                     data.cmdargtoken[3].val.numf,
                      data.cmdargtoken[4].val.numl);
 
         return CLICMD_SUCCESS;
@@ -56,32 +63,40 @@ static errno_t gauss_filter_cli()
 errno_t gaussfilter_addCLIcmd()
 {
 
-    RegisterCLIcommand("gaussfilt", __FILE__, gauss_filter_cli, "gaussian 2D filtering",
-                       "<input image> <output image> <sigma> <filter box size>", "gaussfilt imin imout 2.3 5",
-                       "long gauss_filter(const char *ID_name, const char *out_name, float sigma, int filter_size)");
+    RegisterCLIcommand("gaussfilt",
+                       __FILE__,
+                       gauss_filter_cli,
+                       "gaussian 2D filtering",
+                       "<input image> <output image> <sigma> <filter box size>",
+                       "gaussfilt imin imout 2.3 5",
+                       "long gauss_filter(const char *ID_name, const char "
+                       "*out_name, float sigma, int filter_size)");
 
     return RETURN_SUCCESS;
 }
 
-imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_name, float sigma, int filter_size)
+imageID gauss_filter(const char *__restrict ID_name,
+                     const char *__restrict out_name,
+                     float sigma,
+                     int   filter_size)
 {
-    imageID ID;
-    imageID IDout;
-    imageID IDtmp;
-    float *array;
-    long ii, jj, kk;
-    long naxes[3];
-    long naxis;
-    long i, j, k;
-    float sum;
-    double tot;
-    long jmax;
+    imageID  ID;
+    imageID  IDout;
+    imageID  IDtmp;
+    float   *array;
+    long     ii, jj, kk;
+    long     naxes[3];
+    long     naxis;
+    long     i, j, k;
+    float    sum;
+    double   tot;
+    long     jmax;
     uint32_t filtersizec;
 
     // printf("sigma = %f\n",sigma);
     // printf("filter size = %d\n",filtersizec);
 
-    ID = image_ID(ID_name);
+    ID    = image_ID(ID_name);
     naxis = data.image[ID].md[0].naxis;
     for (kk = 0; kk < naxis; kk++)
     {
@@ -98,7 +113,7 @@ imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_
         filtersizec = data.image[ID].md[0].size[1] / 2 - 1;
     }
 
-    array = (float *)malloc((2 * filtersizec + 1) * sizeof(float));
+    array = (float *) malloc((2 * filtersizec + 1) * sizeof(float));
     if (array == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
@@ -121,7 +136,8 @@ imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_
     sum = 0.0;
     for (i = 0; i < (2 * filtersizec + 1); i++)
     {
-        array[i] = exp(-((i - filtersizec) * (i - filtersizec)) / sigma / sigma);
+        array[i] =
+            exp(-((i - filtersizec) * (i - filtersizec)) / sigma / sigma);
         sum += array[i];
     }
 
@@ -144,8 +160,11 @@ imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_
             {
                 for (i = 0; i < (2 * filtersizec + 1); i++)
                 {
-                    data.image[IDtmp].array.F[jj * naxes[0] + (ii + filtersizec)] +=
-                        array[i] * data.image[ID].array.F[k * naxes[0] * naxes[1] + jj * naxes[0] + (ii + i)];
+                    data.image[IDtmp]
+                        .array.F[jj * naxes[0] + (ii + filtersizec)] +=
+                        array[i] *
+                        data.image[ID].array.F[k * naxes[0] * naxes[1] +
+                                               jj * naxes[0] + (ii + i)];
                 }
             }
             for (ii = 0; ii < filtersizec; ii++)
@@ -155,7 +174,9 @@ imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_
                 {
                     data.image[IDtmp].array.F[jj * naxes[0] + ii] +=
                         array[i] *
-                        data.image[ID].array.F[k * naxes[0] * naxes[1] + jj * naxes[0] + (ii - filtersizec + i)];
+                        data.image[ID]
+                            .array.F[k * naxes[0] * naxes[1] + jj * naxes[0] +
+                                     (ii - filtersizec + i)];
                     tot += array[i];
                 }
                 data.image[IDtmp].array.F[jj * naxes[0] + ii] /= tot;
@@ -163,11 +184,15 @@ imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_
             for (ii = naxes[0] - filtersizec - 1; ii < naxes[0]; ii++)
             {
                 tot = 0.0;
-                for (i = 0; i < (2 * filtersizec + 1) - (ii - naxes[0] + filtersizec + 1); i++)
+                for (i = 0; i < (2 * filtersizec + 1) -
+                                    (ii - naxes[0] + filtersizec + 1);
+                     i++)
                 {
                     data.image[IDtmp].array.F[jj * naxes[0] + ii] +=
                         array[i] *
-                        data.image[ID].array.F[k * naxes[0] * naxes[1] + jj * naxes[0] + (ii - filtersizec + i)];
+                        data.image[ID]
+                            .array.F[k * naxes[0] * naxes[1] + jj * naxes[0] +
+                                     (ii - filtersizec + i)];
                     tot += array[i];
                 }
                 data.image[IDtmp].array.F[jj * naxes[0] + ii] /= tot;
@@ -185,8 +210,11 @@ imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_
                 fflush(stdout);
                 for (j = 0; j < (2 * filtersizec + 1); j++)
                 {
-                    data.image[IDout].array.F[k * naxes[0] * naxes[1] + (jj + filtersizec) * naxes[0] + ii] +=
-                        array[j] * data.image[IDtmp].array.F[(jj + j) * naxes[0] + ii];
+                    data.image[IDout]
+                        .array.F[k * naxes[0] * naxes[1] +
+                                 (jj + filtersizec) * naxes[0] + ii] +=
+                        array[j] *
+                        data.image[IDtmp].array.F[(jj + j) * naxes[0] + ii];
                 }
             }
 
@@ -194,7 +222,7 @@ imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_
             //    fflush(stdout);
             for (jj = 0; jj < filtersizec; jj++)
             {
-                tot = 0.0;
+                tot  = 0.0;
                 jmax = (2 * filtersizec + 1);
                 if (jj - filtersizec + jmax > naxes[1])
                 {
@@ -205,23 +233,35 @@ imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_
                     //           printf("02: %ld/%ld\n", k*naxes[0]*naxes[1]+jj*naxes[0]+ii, naxes[0]*naxes[1]*naxes[2]);
                     //           printf("03: %ld/%ld\n", (jj-filtersizec+j)*naxes[0]+ii, naxes[0]*naxes[1]);
                     fflush(stdout);
-                    data.image[IDout].array.F[k * naxes[0] * naxes[1] + jj * naxes[0] + ii] +=
-                        array[j] * data.image[IDtmp].array.F[(jj - filtersizec + j) * naxes[0] + ii];
+                    data.image[IDout].array.F[k * naxes[0] * naxes[1] +
+                                              jj * naxes[0] + ii] +=
+                        array[j] *
+                        data.image[IDtmp]
+                            .array.F[(jj - filtersizec + j) * naxes[0] + ii];
                     tot += array[j];
                 }
-                data.image[IDout].array.F[k * naxes[0] * naxes[1] + jj * naxes[0] + ii] /= tot;
+                data.image[IDout]
+                    .array.F[k * naxes[0] * naxes[1] + jj * naxes[0] + ii] /=
+                    tot;
             }
 
             for (jj = naxes[1] - filtersizec - 1; jj < naxes[1]; jj++)
             {
                 tot = 0.0;
-                for (j = 0; j < (2 * filtersizec + 1) - (jj - naxes[1] + filtersizec + 1); j++)
+                for (j = 0; j < (2 * filtersizec + 1) -
+                                    (jj - naxes[1] + filtersizec + 1);
+                     j++)
                 {
-                    data.image[IDout].array.F[k * naxes[0] * naxes[1] + jj * naxes[0] + ii] +=
-                        array[j] * data.image[IDtmp].array.F[(jj - filtersizec + j) * naxes[0] + ii];
+                    data.image[IDout].array.F[k * naxes[0] * naxes[1] +
+                                              jj * naxes[0] + ii] +=
+                        array[j] *
+                        data.image[IDtmp]
+                            .array.F[(jj - filtersizec + j) * naxes[0] + ii];
                     tot += array[j];
                 }
-                data.image[IDout].array.F[k * naxes[0] * naxes[1] + jj * naxes[0] + ii] /= tot;
+                data.image[IDout]
+                    .array.F[k * naxes[0] * naxes[1] + jj * naxes[0] + ii] /=
+                    tot;
             }
         }
     }
@@ -234,26 +274,29 @@ imageID gauss_filter(const char *__restrict ID_name, const char *__restrict out_
     return IDout;
 }
 
-imageID gauss_3Dfilter(const char *__restrict ID_name, const char *__restrict out_name, float sigma, int filter_size)
+imageID gauss_3Dfilter(const char *__restrict ID_name,
+                       const char *__restrict out_name,
+                       float sigma,
+                       int   filter_size)
 {
     imageID ID;
     imageID IDout;
     imageID IDtmp;
     imageID IDtmp1;
-    float *array;
-    long ii, jj, kk;
-    long naxes[3];
-    int i, j, k;
-    float sum;
+    float  *array;
+    long    ii, jj, kk;
+    long    naxes[3];
+    int     i, j, k;
+    float   sum;
 
-    array = (float *)malloc((2 * filter_size + 1) * sizeof(float));
+    array = (float *) malloc((2 * filter_size + 1) * sizeof(float));
     if (array == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
         abort();
     }
 
-    ID = image_ID(ID_name);
+    ID       = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
     naxes[2] = data.image[ID].md[0].size[2];
@@ -263,14 +306,15 @@ imageID gauss_3Dfilter(const char *__restrict ID_name, const char *__restrict ou
     copy_image_ID(ID_name, "gtmp", 0);
     arith_image_zero("gtmp");
     copy_image_ID("gtmp", "gtmp1", 0);
-    IDtmp = image_ID("gtmp");
+    IDtmp  = image_ID("gtmp");
     IDtmp1 = image_ID("gtmp1");
-    IDout = image_ID(out_name);
+    IDout  = image_ID(out_name);
 
     sum = 0.0;
     for (i = 0; i < (2 * filter_size + 1); i++)
     {
-        array[i] = exp(-((i - filter_size) * (i - filter_size)) / sigma / sigma);
+        array[i] =
+            exp(-((i - filter_size) * (i - filter_size)) / sigma / sigma);
         sum += array[i];
     }
 
@@ -285,8 +329,12 @@ imageID gauss_3Dfilter(const char *__restrict ID_name, const char *__restrict ou
             {
                 for (i = 0; i < (2 * filter_size + 1); i++)
                 {
-                    data.image[IDtmp].array.F[kk * naxes[0] * naxes[1] + jj * naxes[0] + (ii + filter_size)] +=
-                        array[i] * data.image[ID].array.F[kk * naxes[0] * naxes[1] + jj * naxes[0] + (ii + i)];
+                    data.image[IDtmp]
+                        .array.F[kk * naxes[0] * naxes[1] + jj * naxes[0] +
+                                 (ii + filter_size)] +=
+                        array[i] *
+                        data.image[ID].array.F[kk * naxes[0] * naxes[1] +
+                                               jj * naxes[0] + (ii + i)];
                 }
             }
 
@@ -296,8 +344,12 @@ imageID gauss_3Dfilter(const char *__restrict ID_name, const char *__restrict ou
             {
                 for (j = 0; j < (2 * filter_size + 1); j++)
                 {
-                    data.image[IDtmp1].array.F[kk * naxes[0] * naxes[1] + (jj + filter_size) * naxes[0] + ii] +=
-                        array[j] * data.image[IDtmp].array.F[kk * naxes[0] * naxes[1] + (jj + j) * naxes[0] + ii];
+                    data.image[IDtmp1]
+                        .array.F[kk * naxes[0] * naxes[1] +
+                                 (jj + filter_size) * naxes[0] + ii] +=
+                        array[j] *
+                        data.image[IDtmp].array.F[kk * naxes[0] * naxes[1] +
+                                                  (jj + j) * naxes[0] + ii];
                 }
             }
 
@@ -307,8 +359,12 @@ imageID gauss_3Dfilter(const char *__restrict ID_name, const char *__restrict ou
             {
                 for (k = 0; k < (2 * filter_size + 1); k++)
                 {
-                    data.image[IDout].array.F[(kk + filter_size) * naxes[0] * naxes[1] + jj * naxes[0] + ii] +=
-                        array[k] * data.image[IDtmp1].array.F[(kk + k) * naxes[0] * naxes[1] + jj * naxes[0] + ii];
+                    data.image[IDout]
+                        .array.F[(kk + filter_size) * naxes[0] * naxes[1] +
+                                 jj * naxes[0] + ii] +=
+                        array[k] * data.image[IDtmp1]
+                                       .array.F[(kk + k) * naxes[0] * naxes[1] +
+                                                jj * naxes[0] + ii];
                 }
             }
 

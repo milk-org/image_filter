@@ -8,42 +8,42 @@
 
 int filter_fit1D(const char *__restrict fname, long NBpts)
 {
-    FILE *fp;
+    FILE  *fp;
     float *xarray;
     float *yarray;
-    long i;
-    long iter;
-    long NBiter = 10000000;
+    long   i;
+    long   iter;
+    long   NBiter = 10000000;
     float *CX;  //,CX,CX2,CX3,CX4,CX5;
     float *CXb; //,CXb,CX2b,CX3b,CX4b,CX5b;
-    long PolyOrder = 10;
-    long k;
-    float amp;
-    float x, value, bvalue, tmp;
-    float cnt, coeff;
+    long   PolyOrder = 10;
+    long   k;
+    float  amp;
+    float  x, value, bvalue, tmp;
+    float  cnt, coeff;
 
-    xarray = (float *)malloc(sizeof(float) * NBpts);
+    xarray = (float *) malloc(sizeof(float) * NBpts);
     if (xarray == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
         abort();
     }
 
-    yarray = (float *)malloc(sizeof(float) * NBpts);
+    yarray = (float *) malloc(sizeof(float) * NBpts);
     if (yarray == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
         abort();
     }
 
-    CX = (float *)malloc(sizeof(float) * PolyOrder);
+    CX = (float *) malloc(sizeof(float) * PolyOrder);
     if (CX == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
         abort();
     }
 
-    CXb = (float *)malloc(sizeof(float) * PolyOrder);
+    CXb = (float *) malloc(sizeof(float) * PolyOrder);
     if (CXb == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
@@ -97,10 +97,10 @@ int filter_fit1D(const char *__restrict fname, long NBpts)
             }
 
         value = 0.0;
-        cnt = 0.0;
+        cnt   = 0.0;
         for (i = 0; i < NBpts; i++)
         {
-            x = xarray[i];
+            x   = xarray[i];
             tmp = 0.0;
             for (k = 0; k < PolyOrder; k++)
             {

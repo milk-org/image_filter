@@ -6,20 +6,22 @@
 #include "COREMOD_memory/COREMOD_memory.h"
 #include "COREMOD_tools/COREMOD_tools.h"
 
-imageID filter_CubePercentile(const char *__restrict IDcin_name, float perc, const char *__restrict IDout_name)
+imageID filter_CubePercentile(const char *__restrict IDcin_name,
+                              float perc,
+                              const char *__restrict IDout_name)
 {
     imageID IDcin;
     imageID IDout;
-    long xsize, ysize, zsize;
-    long ii, kk;
-    float *array;
+    long    xsize, ysize, zsize;
+    long    ii, kk;
+    float  *array;
 
     IDcin = image_ID(IDcin_name);
     xsize = data.image[IDcin].md[0].size[0];
     ysize = data.image[IDcin].md[0].size[1];
     zsize = data.image[IDcin].md[0].size[2];
 
-    array = (float *)malloc(sizeof(float) * xsize * ysize);
+    array = (float *) malloc(sizeof(float) * xsize * ysize);
     if (array == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
@@ -35,7 +37,7 @@ imageID filter_CubePercentile(const char *__restrict IDcin_name, float perc, con
         }
 
         quick_sort_float(array, zsize);
-        data.image[IDout].array.F[ii] = array[(long)(perc * zsize)];
+        data.image[IDout].array.F[ii] = array[(long) (perc * zsize)];
     }
 
     free(array);
@@ -43,23 +45,25 @@ imageID filter_CubePercentile(const char *__restrict IDcin_name, float perc, con
     return IDout;
 }
 
-imageID filter_CubePercentileLimit(const char *__restrict IDcin_name, float perc, float limit,
+imageID filter_CubePercentileLimit(const char *__restrict IDcin_name,
+                                   float perc,
+                                   float limit,
                                    const char *__restrict IDout_name)
 {
     imageID IDcin;
     imageID IDout;
-    long xsize, ysize, zsize;
-    long ii, kk;
-    float *array;
-    long cnt;
-    float v1;
+    long    xsize, ysize, zsize;
+    long    ii, kk;
+    float  *array;
+    long    cnt;
+    float   v1;
 
     IDcin = image_ID(IDcin_name);
     xsize = data.image[IDcin].md[0].size[0];
     ysize = data.image[IDcin].md[0].size[1];
     zsize = data.image[IDcin].md[0].size[2];
 
-    array = (float *)malloc(sizeof(float) * xsize * ysize);
+    array = (float *) malloc(sizeof(float) * xsize * ysize);
     if (array == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
@@ -82,7 +86,7 @@ imageID filter_CubePercentileLimit(const char *__restrict IDcin_name, float perc
             if (cnt > 0)
             {
                 quick_sort_float(array, zsize);
-                data.image[IDout].array.F[ii] = array[(long)(perc * cnt)];
+                data.image[IDout].array.F[ii] = array[(long) (perc * cnt)];
             }
             else
             {
