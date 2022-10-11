@@ -58,8 +58,8 @@ errno_t filter_fit2DcosKernel(const char *__restrict IDname, float radius)
     Varraytmp = (float *) malloc(sizeof(float) * NBgridpts);
     Varraycnt = (float *) malloc(sizeof(float) * NBgridpts);
 
-    for (i = 0; i < NBgridpts1D; i++)
-        for (j = 0; j < NBgridpts1D; j++)
+    for(i = 0; i < NBgridpts1D; i++)
+        for(j = 0; j < NBgridpts1D; j++)
         {
             x0array[j * NBgridpts1D + i]   = -1.0 + 2.0 * i / (NBgridpts1D - 1);
             y0array[j * NBgridpts1D + i]   = -1.0 + 2.0 * j / (NBgridpts1D - 1);
@@ -77,8 +77,8 @@ errno_t filter_fit2DcosKernel(const char *__restrict IDname, float radius)
     FUNC_CHECK_RETURN(create_2Dimage_ID("fitim", size, size, &ID2));
     FUNC_CHECK_RETURN(create_2Dimage_ID("residual", size, size, &ID3));
 
-    for (ii = 0; ii < size; ii++)
-        for (jj = 0; jj < size; jj++)
+    for(ii = 0; ii < size; ii++)
+        for(jj = 0; jj < size; jj++)
         {
             x    = (1.0 * ii - size / 2) / radius;
             y    = (1.0 * jj - size / 2) / radius;
@@ -97,7 +97,7 @@ errno_t filter_fit2DcosKernel(const char *__restrict IDname, float radius)
             //	tmp1 = -2.70e-5*exp(-7.0*pow((r-0.013),2.0))*r-1.05e-7;
             //	tmp2 = -2.70e-5*exp(-7.0*pow(((-r)-0.013),2.0))*(-r)-1.05e-7;
 
-            if (r < 1.0)
+            if(r < 1.0)
             {
                 tmp = tmp1 * (1.0 + cosa) / 2.0 + tmp2 * (1.0 - cosa) / 2.0;
             }
@@ -122,28 +122,28 @@ errno_t filter_fit2DcosKernel(const char *__restrict IDname, float radius)
     save_fl_fits("residual", "residual0");
     //   exit(0);
 
-    for (iter = 0; iter < NBiter; iter++)
+    for(iter = 0; iter < NBiter; iter++)
     {
-        for (i = 0; i < NBgridpts1D; i++)
-            for (j = 0; j < NBgridpts1D; j++)
+        for(i = 0; i < NBgridpts1D; i++)
+            for(j = 0; j < NBgridpts1D; j++)
             {
                 Varraytmp[j * NBgridpts1D + i] = 0.0;
                 Varraycnt[j * NBgridpts1D + i] = 0.0;
             }
 
-        for (ii = 0; ii < size; ii++)
-            for (jj = 0; jj < size; jj++)
+        for(ii = 0; ii < size; ii++)
+            for(jj = 0; jj < size; jj++)
             {
                 x = (1.0 * ii - size / 2) / radius;
                 y = (1.0 * jj - size / 2) / radius;
                 r = sqrt(x * x + y * y);
-                if (r < 1.0)
-                    for (i = 0; i < NBgridpts1D; i++)
-                        for (j = 0; j < NBgridpts1D; j++)
+                if(r < 1.0)
+                    for(i = 0; i < NBgridpts1D; i++)
+                        for(j = 0; j < NBgridpts1D; j++)
                         {
                             x1 = (x - x0array[j * NBgridpts1D + i]) / xstep;
                             y1 = (y - y0array[j * NBgridpts1D + i]) / ystep;
-                            if ((fabs(x1) < 1.0) && (fabs(y1) < 1.0))
+                            if((fabs(x1) < 1.0) && (fabs(y1) < 1.0))
                             {
                                 //value = (fabs(x1)-1.0)*(fabs(y1)-1.0); //0.25*(cos(x1*PI)+1.0)*(cos(y1*PI)+1.0);
                                 value = 0.25 * (cos(x1 * PI) + 1.0) *
@@ -155,10 +155,10 @@ errno_t filter_fit2DcosKernel(const char *__restrict IDname, float radius)
                             }
                         }
             }
-        for (i = 0; i < NBgridpts1D; i++)
-            for (j = 0; j < NBgridpts1D; j++)
+        for(i = 0; i < NBgridpts1D; i++)
+            for(j = 0; j < NBgridpts1D; j++)
             {
-                if (Varraycnt[j * NBgridpts1D + i] > 1.0)
+                if(Varraycnt[j * NBgridpts1D + i] > 1.0)
                 {
                     Varraytmp[j * NBgridpts1D + i] /=
                         Varraycnt[j * NBgridpts1D + i];
@@ -169,32 +169,32 @@ errno_t filter_fit2DcosKernel(const char *__restrict IDname, float radius)
                 }
             }
 
-        for (i = 0; i < NBgridpts1D; i++)
-            for (j = 0; j < NBgridpts1D; j++)
+        for(i = 0; i < NBgridpts1D; i++)
+            for(j = 0; j < NBgridpts1D; j++)
             {
                 Varray[j * NBgridpts1D + i] += Varraytmp[j * NBgridpts1D + i];
             }
 
-        for (ii = 0; ii < size; ii++)
-            for (jj = 0; jj < size; jj++)
+        for(ii = 0; ii < size; ii++)
+            for(jj = 0; jj < size; jj++)
             {
                 data.image[ID2].array.F[jj * size + ii] =
                     data.image[ID1].array.F[jj * size + ii];
             }
 
-        for (ii = 0; ii < size; ii++)
-            for (jj = 0; jj < size; jj++)
+        for(ii = 0; ii < size; ii++)
+            for(jj = 0; jj < size; jj++)
             {
                 x = (1.0 * ii - size / 2) / radius;
                 y = (1.0 * jj - size / 2) / radius;
                 r = sqrt(x * x + y * y);
-                if (r < 1.0)
-                    for (i = 0; i < NBgridpts1D; i++)
-                        for (j = 0; j < NBgridpts1D; j++)
+                if(r < 1.0)
+                    for(i = 0; i < NBgridpts1D; i++)
+                        for(j = 0; j < NBgridpts1D; j++)
                         {
                             x1 = (x - x0array[j * NBgridpts1D + i]) / xstep;
                             y1 = (y - y0array[j * NBgridpts1D + i]) / ystep;
-                            if ((fabs(x1) < 1.0) && (fabs(y1) < 1.0))
+                            if((fabs(x1) < 1.0) && (fabs(y1) < 1.0))
                             {
                                 //value = (fabs(x1)-1.0)*(fabs(y1)-1.0);
                                 value = 0.25 * (cos(x1 * PI) + 1.0) *
@@ -206,13 +206,13 @@ errno_t filter_fit2DcosKernel(const char *__restrict IDname, float radius)
             }
         cnt   = 0;
         error = 0.0;
-        for (ii = 0; ii < size; ii++)
-            for (jj = 0; jj < size; jj++)
+        for(ii = 0; ii < size; ii++)
+            for(jj = 0; jj < size; jj++)
             {
                 x = (1.0 * ii - size / 2) / radius;
                 y = (1.0 * jj - size / 2) / radius;
                 r = sqrt(x * x + y * y);
-                if (r < 1.0)
+                if(r < 1.0)
                 {
                     data.image[ID3].array.F[jj * size + ii] =
                         data.image[ID].array.F[jj * size + ii] -

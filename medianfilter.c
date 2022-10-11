@@ -24,7 +24,7 @@ imageID median_filter(const char *__restrict ID_name,
 
     array = (float *) malloc((2 * filter_size + 1) * (2 * filter_size + 1) *
                              sizeof(float));
-    if (array == NULL)
+    if(array == NULL)
     {
         PRINT_ERROR("malloc returns NULL pointer");
         abort();
@@ -43,16 +43,16 @@ imageID median_filter(const char *__restrict ID_name,
     copy_image_ID(ID_name, out_name, 0);
     IDout = image_ID(out_name);
 
-    for (jj = filter_size; jj < naxes[1] - filter_size; jj++)
-        for (ii = filter_size; ii < naxes[0] - filter_size; ii++)
+    for(jj = filter_size; jj < naxes[1] - filter_size; jj++)
+        for(ii = filter_size; ii < naxes[0] - filter_size; ii++)
         {
-            for (i = 0; i < (2 * filter_size + 1); i++)
-                for (j = 0; j < (2 * filter_size + 1); j++)
+            for(i = 0; i < (2 * filter_size + 1); i++)
+                for(j = 0; j < (2 * filter_size + 1); j++)
                 {
                     array[i * (2 * filter_size + 1) + j] =
                         data.image[ID]
-                            .array.F[(jj - filter_size + j) * naxes[0] +
-                                     (ii - filter_size + i)];
+                        .array.F[(jj - filter_size + j) * naxes[0] +
+                                                        (ii - filter_size + i)];
                 }
             quick_sort_float(array,
                              (2 * filter_size + 1) * (2 * filter_size + 1));
